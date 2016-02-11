@@ -1,7 +1,9 @@
-var Todo = require('./models/blog');
+var models = require('./models/blog');
+var Blog = models.Blog;
+var Comment = models.Comment;
 
-function getTodos(res) {
-    Todo.find(function (err, blogs) {
+function getBlogs(res) {
+    Blog.find().select('title title_sub _id user content date').exec(function (err, blogs) {
 
         // if there is an error retrieving, send the error. nothing after res.send(err) will execute
         if (err) {
@@ -19,35 +21,39 @@ module.exports = function (app) {
     // get all blogs
     app.get('/api/blogs', function (req, res) {
         // use mongoose to get all blogs in the database
-        getTodos(res);
+        getBlogs(res);
     });
 
     // create blog and send back all blogs after creation
     app.post('/api/blogs', function (req, res) {
 
         // create a blog, information comes from AJAX request from Angular
-        Todo.create({
-            text: req.body.text,
+        Blog.create({
+            title:req.body.title,
+            title_sub:req.body.subject,
+            date: new Date(),
+            user:"chiru",
+            content: req.body.text,
             done: false
         }, function (err, blog) {
             if (err)
                 res.send(err);
 
             // get and return all the blogs after you create another
-            getTodos(res);
+            getBlogs(res);
         });
 
     });
 
     // delete a blog
     app.delete('/api/blogs/:blog_id', function (req, res) {
-        Todo.remove({
+        Blog.remove({
             _id: req.params.blog_id
         }, function (err, blog) {
             if (err)
                 res.send(err);
 
-            getTodos(res);
+            getBlogs(res);
         });
     });
 

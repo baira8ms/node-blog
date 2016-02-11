@@ -14,6 +14,9 @@ angular.module('blogController', [])
 				$scope.loading = false;
 			});
 
+			$scope.formatDate = function(date){
+				return date.substring(0, 10);
+			}
 		// CREATE ==================================================================
 		// when submitting the add form, send the text to the node API
 		$scope.createBlog = function() {

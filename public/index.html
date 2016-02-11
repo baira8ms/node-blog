@@ -33,10 +33,11 @@
 
 		<!-- HEADER AND TODO COUNT -->
 		<div class="jumbotron text-center">
-			<h1>Technical Blog <span class="label label-info">{{ blogs.length }}</span></h1>
+			<h1>Technical Blog </h1>
 		</div>
 
 		<!-- TODO LIST -->
+		<span class="label label-info">{{ blogs.length }}</span>
 		<div id="blog-list" class="row">
 			<div class="col-sm-4 col-sm-offset-4">
 
@@ -45,7 +46,10 @@
 				<!-- LOOP OVER THE TODOS IN $scope.blogs -->
 				<div class="checkbox" ng-repeat="blog in blogs">
 					<label>
-						<input type="checkbox" ng-click="deleteBlog(blog._id)"> {{ blog.text }}
+						<input type="checkbox" ng-click="deleteBlog(blog._id)"> {{ blog.content }}
+						{{blog.title}}/{{blog.title_sub}} created by {{blog.user}} {{formatDate(blog.date)}}
+
+						</input>
 					</label>
 				</div>
 
@@ -63,6 +67,8 @@
 					<div class="form-group">
 
 						<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+						<input type="text" rows="4" cols="50" class="form-control input-lg text-left" placeholder="Title..." ng-model="formData.title"/>
+						<input type="text" rows="4" cols="50" class="form-control input-lg text-left" placeholder="Subject..." ng-model="formData.subject"/>
 						<textarea rows="4" cols="50" class="form-control input-lg text-left" placeholder="Start discussion..." ng-model="formData.text"></textarea>
 					</div>
 					<button type="submit" class="btn btn-primary btn-lg" ng-click="createBlog()">Add</button>
