@@ -37,7 +37,8 @@
 		</div>
 
 		<!-- TODO LIST -->
-		<span class="label label-info">{{ blogs.length }}</span>
+		<button class="btn btn-primary btn-lg" cols="50" ng-click="showControls()">Create New Post</button>
+		<span class="label label-info" cols="50">{{ blogs.length }}</span>
 		<div id="blog-list" class="row">
 			<div class="col-sm-4 col-sm-offset-4">
 
@@ -46,7 +47,7 @@
 				<!-- LOOP OVER THE TODOS IN $scope.blogs -->
 				<div class="checkbox" ng-repeat="blog in blogs">
 					<label>
-						<input type="checkbox" ng-click="deleteBlog(blog._id)"> {{ blog.content }}
+						<input type="checkbox" name="cb" ng-click="deleteBlog(blog._id)"> {{ blog.content }}
 						{{blog.title}}/{{blog.title_sub}} created by {{blog.user}} {{formatDate(blog.date)}}
 
 						</input>
@@ -61,7 +62,7 @@
 		</div>
 
 		<!-- FORM TO CREATE TODOS -->
-		<div id="blog-form" class="row">
+		<div id="blog-form" class="row" ng-show="showbtn">
 			<div class="col-sm-8 col-sm-offset-2 text-center">
 				<form>
 					<div class="form-group">
@@ -71,7 +72,7 @@
 						<input type="text" rows="4" cols="50" class="form-control input-lg text-left" placeholder="Subject..." ng-model="formData.subject"/>
 						<textarea rows="4" cols="50" class="form-control input-lg text-left" placeholder="Start discussion..." ng-model="formData.text"></textarea>
 					</div>
-					<button type="submit" class="btn btn-primary btn-lg" ng-click="createBlog()">Add</button>
+					<button type="submit" class="btn btn-primary btn-lg" ng-click="createBlog()">Post</button>
 				</form>
 			</div>
 		</div>

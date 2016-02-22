@@ -4,19 +4,20 @@ angular.module('blogController', [])
 	.controller('mainController', ['$scope','$http','Blogs', function($scope, $http, Blogs) {
 		$scope.formData = {};
 		$scope.loading = true;
+		$scope.showbtn = false;
 
 		// GET =====================================================================
 		// when landing on the page, get all blogs and show them
 		// use the service to get all the blogs
 		Blogs.get()
-			.success(function(data) {
-				$scope.blogs = data;
-				$scope.loading = false;
-			});
+		.success(function(data) {
+			$scope.blogs = data;
+			$scope.loading = false;
+		});
 
-			$scope.formatDate = function(date){
-				return date.substring(0, 10);
-			}
+		$scope.formatDate = function(date){
+			return date.substring(0, 10);
+		}
 		// CREATE ==================================================================
 		// when submitting the add form, send the text to the node API
 		$scope.createBlog = function() {
@@ -35,19 +36,47 @@ angular.module('blogController', [])
 						$scope.formData = {}; // clear the form so our user is ready to enter another
 						$scope.blogs = data; // assign our new list of blogs
 					});
+				}
+				$scope.showbtn = false;
+			};
+
+			$scope.showControls = function(){
+				if($scope.showbtn == false){
+					$scope.showbtn = true;
+				}else{
+					$scope.showbtn = false;
+					
+				}
+
 			}
-		};
 
 		// DELETE ==================================================================
 		// delete a blog after checking it
 		$scope.deleteBlog = function(id) {
 			$scope.loading = true;
-
-			Blogs.delete(id)
+			if(confirm("are you sure")){
+				Blogs.delete(id)
 				// if successful creation, call our get function to get all the new blogs
 				.success(function(data) {
 					$scope.loading = false;
 					$scope.blogs = data; // assign our new list of blogs
 				});
+			}
+			getAll();
 		};
+
+		var getAll = function(){
+		Blogs.get()
+			.success(function(data) {
+				$scope.blogs = data;
+				$scope.loading = false;
+			});
+		}
+
+		$scope.create = function(that){
+			alert(that);
+			alert(that.visible);
+			that.visible=display;
+
+		}
 	}]);
