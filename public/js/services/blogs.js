@@ -12,6 +12,9 @@ angular.module('blogService', [])
 			},
 			delete : function(id) {
 				return $http.delete('/api/blogs/' + id);
+			},
+			completeBlogInfo : function(id){
+				return $http.get('/api/blogs/' + id);
 			}
 		}
 	}]);

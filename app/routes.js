@@ -57,6 +57,18 @@ module.exports = function (app) {
         });
     });
 
+    // get a blog
+    app.get('/api/blogs/:blog_id', function (req, res) {
+       Blog.findById(req.params.blog_id).select('title title_sub _id user content date').exec(function (err, blog) {
+
+        // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+        if (err) {
+            res.send(err);
+        }
+        res.json(blog); // return all blogs in JSON format
+    });
+    });
+
     // application -------------------------------------------------------------
     app.get('*', function (req, res) {
         res.sendFile(__dirname + '/public/index.html'); // load the single view file (angular will handle the page changes on the front-end)

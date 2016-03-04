@@ -5,6 +5,7 @@ angular.module('blogController', [])
 		$scope.formData = {};
 		$scope.loading = true;
 		$scope.showbtn = false;
+		$scope.showResults = true;
 
 		// GET =====================================================================
 		// when landing on the page, get all blogs and show them
@@ -66,17 +67,27 @@ angular.module('blogController', [])
 		};
 
 		var getAll = function(){
-		Blogs.get()
+			Blogs.get()
 			.success(function(data) {
 				$scope.blogs = data;
 				$scope.loading = false;
 			});
 		}
 
-		$scope.create = function(that){
-			alert(that);
-			alert(that.visible);
-			that.visible=display;
+		$scope.getHomePage = function(){
+			$scope.loading=true;
+			$scope.showResults=true;
+			getAll();
+		};
 
-		}
+		$scope.getCompleteBlog = function(id){
+			$scope.loading = true;
+			$scope.showResults = false;
+			Blogs.completeBlogInfo(id)
+			.success(function(data){
+				$scope.blog = data;
+				$scope.loading = false;
+			});
+
+		};
 	}]);
