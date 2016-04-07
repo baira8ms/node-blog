@@ -59,7 +59,7 @@ module.exports = function (app) {
 
     // get a blog
     app.get('/api/blogs/:blog_id', function (req, res) {
-       Blog.findById(req.params.blog_id).select('title title_sub _id user content date').exec(function (err, blog) {
+     Blog.findById(req.params.blog_id).select('title title_sub _id user content date').exec(function (err, blog) {
 
         // if there is an error retrieving, send the error. nothing after res.send(err) will execute
         if (err) {
@@ -67,10 +67,38 @@ module.exports = function (app) {
         }
         res.json(blog); // return all blogs in JSON format
     });
-    });
+ });
 
     // application -------------------------------------------------------------
     app.get('*', function (req, res) {
         res.sendFile(__dirname + '/public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
     });
-};
+
+      // create blog and send back all blogs after creation
+      app.put('/api/blogs', function (req, res) {
+
+        // create a blog, information comes from AJAX request from Angular
+        Blog.update({
+            title:req.body.title,
+            title_sub:req.body.title_sub,
+            date: new Date(),
+            user:"chiru",
+            content: req.body.content,
+            done: false
+        }, function (err, blog) {
+            if (err)
+                res.send(err);
+
+        //     // get and return all the blogs after you create another
+        //     Blog.findById(blog.id).select('title title_sub _id user content date').exec(function (err, blog) {
+
+        // // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+        // if (err) {
+        //     res.send(err);
+        // }
+        getBlogs(res); // return all blogs in JSON format
+//    });
+        });
+
+    });
+  };

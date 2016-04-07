@@ -10,6 +10,9 @@ angular.module('blogService', [])
 			create : function(blogData) {
 				return $http.post('/api/blogs', blogData);
 			},
+			update : function(blog) {
+				return $http.put('/api/blogs', blog);
+			},
 			delete : function(id) {
 				return $http.delete('/api/blogs/' + id);
 			},

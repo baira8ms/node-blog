@@ -6,6 +6,8 @@ angular.module('blogController', [])
 		$scope.loading = true;
 		$scope.showbtn = false;
 		$scope.showResults = true;
+		$scope.showUpdateForm = false;
+		$scope.blog = {};
 
 		// GET =====================================================================
 		// when landing on the page, get all blogs and show them
@@ -90,4 +92,29 @@ angular.module('blogController', [])
 			});
 
 		};
+
+		$scope.showUpdate = function(){
+			if($scope.showUpdateForm == false){
+					$scope.showUpdateForm = true;
+				}else{
+					$scope.showUpdateForm = false;
+					
+				}
+				$scope.showResults=false;
+		};
+
+		$scope.updateBlog = function(){
+				$scope.loading = true;
+
+				// call the create function from our service (returns a promise object)
+				Blogs.update($scope.blog)
+
+					// if successful creation, call our get function to get all the new blogs
+					.success(function(data) {
+						$scope.loading = false;
+						$scope.formData = {}; // clear the form so our user is ready to enter another
+						$scope.blogs = data; // assign our new list of blogs
+						$scope.showUpdateForm = false;
+					});
+			};
 	}]);

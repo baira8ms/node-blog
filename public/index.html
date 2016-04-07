@@ -12,6 +12,8 @@
 	<!-- SCROLLS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<!-- Custom css files created from less preProcessor files -->
+	<link rel="stylesheet" type="text/css" href="/styles/css/checkbox_alignment.css" />
 	<style>
 		html 					{ overflow-y:scroll; }
 		body 					{ padding-top:50px; }
@@ -37,13 +39,13 @@
 		</div>
 
 		<!-- TODO LIST -->
-		<button class="btn btn-primary btn-lg" cols="50" ng-click="showControls()">Create New Post</button>
-		<span class="label label-info" cols="20">{{ blogs.length }}</span>
 		<div id="blog-list" class="row" ng-show="showResults">
+		<button class="btn btn-primary btn-sm" cols="100" ng-click="showControls()">Create New Post</button>
+		<span class="label label-info" cols="20">{{ blogs.length }}</span>
 			<div class="col-sm-8 col-sm-offset-2">
 
 				<!-- LOOP OVER THE TODOS IN $scope.blogs -->
-				<div class="checkbox" ng-repeat="blog in blogs">
+				<div class="checkbox chk" ng-repeat="blog in blogs">
 						<input type="checkbox" name="cb" ng-click="deleteBlog(blog._id)"/>
 						 <article>
 						    <div class="meta">
@@ -53,12 +55,12 @@
 						       {{formatDate(blog.user)}}
 						      </p>
 
-						      <h1><a ng-click="getCompleteBlog(blog._id)">{{blog.title}}</a></h1>
+						      <h3><a ng-click="getCompleteBlog(blog._id)">{{blog.title}}</a></h3>
 
 						      <p>{{blog.title_sub}}</p>
 
 
-						      <p><button class="btn btn-primary btn-lg" ng-click="getCompleteBlog(blog._id)">Read more</button></p>
+						      <p><button class="btn btn-primary btn-sm" ng-click="getCompleteBlog(blog._id)">Read more</button></p>
 						    </div>
 						  </article>
 				</div>
@@ -70,17 +72,36 @@
 			</div>
 		</div>
 
-		<div id="show-blog" class="row" ng-hide="showResults">
+		<div id="show-blog" class="row" ng-hide="showResults || showUpdateForm">
 			<div class="col-sm-8 col-sm-offset-2">
 				<article>
-					<h1>{{blog.title}}</h1>
+					<p><button class="btn btn-primary btn-sm" cols="100" ng-click="showUpdate()">Edit Post</button></p>
+					<h3>{{blog.title}}</h3>
 					<h4>{{blog.title_sub}}</h4>
 
 					<p>{{blog.content}}</p>
 				</article>
 			</div>
 		</div>
+
 		<!-- FORM TO CREATE TODOS -->
+		<div id="update-form" class="row" ng-show="showUpdateForm">
+			<div class="col-sm-8 col-sm-offset-2 text-center">
+				<form>
+					<div class="form-group">
+
+						<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+						<input type="text" rows="4" cols="50" class="form-control input-lg text-left" ng-model="blog.title"/>
+						<input type="text" rows="4" cols="50" class="form-control input-lg text-left" ng-model="blog.title_sub"/>
+						<textarea rows="4" cols="50" class="form-control input-lg text-left" 
+						ng-model="blog.content"></textarea>
+					</div>
+					<button type="submit" class="btn btn-primary btn-sm" ng-click="updateBlog()">Update</button>
+				</form>
+			</div>
+		</div>
+
+		<!-- FORM TO CREATE  BLOGS-->
 		<div id="blog-form" class="row" ng-show="showbtn">
 			<div class="col-sm-8 col-sm-offset-2 text-center">
 				<form>
@@ -91,7 +112,7 @@
 						<input type="text" rows="4" cols="50" class="form-control input-lg text-left" placeholder="Subject..." ng-model="formData.subject"/>
 						<textarea rows="4" cols="50" class="form-control input-lg text-left" placeholder="Start discussion..." ng-model="formData.text"></textarea>
 					</div>
-					<button type="submit" class="btn btn-primary btn-lg" ng-click="createBlog()">Post</button>
+					<button type="submit" class="btn btn-primary btn-sm" ng-click="createBlog()">Post</button>
 				</form>
 			</div>
 		</div>
