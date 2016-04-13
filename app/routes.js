@@ -76,19 +76,29 @@ module.exports = function (app) {
 
       // create blog and send back all blogs after creation
       app.put('/api/blogs', function (req, res) {
+       
+       // get a user with ID of 1
+        Blog.findById(req.body._id, function(err, blogItem) {
+            if (err) throw err;
+            debugger;
+            blogItem.title=req.body.title;
+            blogItem.title_sub=req.body.title_sub;
+            blogItem.content=req.body.content;
+            blogItem.date=new Date();
 
-        // create a blog, information comes from AJAX request from Angular
-        Blog.update({
-            title:req.body.title,
-            title_sub:req.body.title_sub,
-            date: new Date(),
-            user:"chiru",
-            content: req.body.content,
-            done: false
-        }, function (err, blog) {
-            if (err)
-                res.send(err);
-
+           blogItem.save(function(err){
+            if(err) throw err;
+                getBlogs(res);
+           }) ;
+        // Blog.update(({_id:req.body._id},{$set:{_id:req.body._id,
+        //     title:req.body.title,
+        //     title_sub:req.body.title_sub,
+        //     date: new Date(),
+        //     user:"chiru",
+        //     content: req.body.content
+        // }}), function (err, blog) {
+        //     if (err)
+        //         res.send(err);
         //     // get and return all the blogs after you create another
         //     Blog.findById(blog.id).select('title title_sub _id user content date').exec(function (err, blog) {
 
@@ -96,9 +106,8 @@ module.exports = function (app) {
         // if (err) {
         //     res.send(err);
         // }
-        getBlogs(res); // return all blogs in JSON format
+        //getBlogs(res); // return all blogs in JSON format
 //    });
-        });
-
-    });
+            });
+   });
   };

@@ -1,4 +1,12 @@
-.chk{
+div.checkbox {
   padding: 15px;
-  margin:0px;
+}
+.node-blog .col-sm-offset-2 {
+  margin-left: 0px !important;
+}
+.buttonClass {
+  margin-right: 1000px;
+}
+.noOfBlogsClass {
+  margin-left: 1000px;
 }

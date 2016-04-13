@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<!-- Custom css files created from less preProcessor files -->
-	<link rel="stylesheet" type="text/css" href="/styles/css/checkbox_alignment.css" />
+	<link rel="stylesheet" type="text/css" href="/../styles/css/checkbox_alignment.css" />
 	<style>
 		html 					{ overflow-y:scroll; }
 		body 					{ padding-top:50px; }
@@ -30,7 +30,7 @@
 
 </head>
 <!-- SET THE CONTROLLER -->
-<body ng-controller="mainController">
+<body ng-controller="mainController" class="node-blog">
 	<div class="container">
 
 		<!-- HEADER AND TODO COUNT -->
@@ -40,12 +40,14 @@
 
 		<!-- TODO LIST -->
 		<div id="blog-list" class="row" ng-show="showResults">
-		<button class="btn btn-primary btn-sm" cols="100" ng-click="showControls()">Create New Post</button>
-		<span class="label label-info" cols="20">{{ blogs.length }}</span>
+		<button class="btn btn-primary btn-sm buttonClass" ng-click="showControls()">Create New Post</button>
+		
+		<button class="btn btn-primary btn-sm noOfBlogsClass" disabled="disabled">Total blogs : {{ blogs.length }}</button>
+
 			<div class="col-sm-8 col-sm-offset-2">
 
 				<!-- LOOP OVER THE TODOS IN $scope.blogs -->
-				<div class="checkbox chk" ng-repeat="blog in blogs">
+				<div class="checkbox" ng-repeat="blog in blogs">
 						<input type="checkbox" name="cb" ng-click="deleteBlog(blog._id)"/>
 						 <article>
 						    <div class="meta">
